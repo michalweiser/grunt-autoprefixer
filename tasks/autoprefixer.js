@@ -45,6 +45,19 @@ module.exports = function(grunt) {
         });
     }
 
+    function getDestinationPath(destination, filepath, preservePath) {
+        var filename,
+            dest = destination;
+
+        if (dest && grunt.file.isDir(dest)) {
+            dest += dest.match(/^.*\/$/) ? '' : '/';
+            filename = preservePath ? filepath : filepath.split("/").pop();
+            return dest + filename;
+        } else {
+            return dest || filepath;
+        }
+    }
+
     /**
      * @param {string} msg Log message
      */
@@ -65,7 +78,11 @@ module.exports = function(grunt) {
             safe: false
         });
 
-        prefixer = autoprefixer({browsers: options.browsers, cascade: options.cascade, remove: options.remove});
+        prefixer = autoprefixer({
+            browsers: options.browsers,
+            cascade: options.cascade,
+            remove: options.remove
+        });
 
         this.files.forEach(function(f) {
             if (!f.src.length) {
@@ -74,7 +91,7 @@ module.exports = function(grunt) {
 
             f.src
                 .forEach(function(filepath) {
-                    var dest = f.dest || filepath;
+                    var dest = getDestinationPath(f.dest, filepath, false);
                     var input = grunt.file.read(filepath);
                     var output = prefix(input, filepath, dest);
 
