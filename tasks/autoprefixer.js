@@ -75,7 +75,8 @@ module.exports = function(grunt) {
             map: false,
             silent: false,
             remove: true,
-            safe: false
+            safe: false,
+            preservePath: false
         });
 
         prefixer = autoprefixer({
@@ -91,7 +92,7 @@ module.exports = function(grunt) {
 
             f.src
                 .forEach(function(filepath) {
-                    var dest = getDestinationPath(f.dest, filepath, false);
+                    var dest = getDestinationPath(f.dest, filepath, options.preservePath);
                     var input = grunt.file.read(filepath);
                     var output = prefix(input, filepath, dest);
 

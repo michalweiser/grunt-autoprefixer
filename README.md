@@ -127,6 +127,26 @@ options: {
 }
 ```
 
+#### options.preservePath
+Type: `Boolean`
+Default value: `false`
+
+When using destination directory, allow to preserve input files directory path.
+
+##### false
+* in: src/file.css
+* out: dest/file.css
+
+##### true
+* in: src/file.css
+* out: dest/src/file.css
+
+```js
+options: {
+    preservePath: true
+}
+```
+
 ### Usage Examples
 
 ```js
